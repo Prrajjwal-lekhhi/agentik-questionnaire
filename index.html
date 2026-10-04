@@ -39,6 +39,9 @@
   .eyebrow { display: inline-block; font-size: 0.74rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
   .hero h1 { font-family: var(--font-serif); font-size: clamp(2rem, 5vw, 2.8rem); font-weight: 400; letter-spacing: -0.02em; line-height: 1.14; margin-bottom: 14px; }
   .hero p { font-size: 1.02rem; color: var(--deep-text); max-width: 600px; }
+  .hero p + p { margin-top: 12px; }
+  .hero a { color: #ffffff; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--accent); }
+  .hero a:hover { color: var(--accent); }
   .hero .pills { margin-top: 24px; display: flex; flex-wrap: wrap; gap: 8px; }
   .hero .pill { font-size: 0.8rem; color: var(--deep-text); border: 1px solid var(--deep-line); border-radius: 999px; padding: 5px 12px; }
 
@@ -94,6 +97,7 @@
   button[type="submit"] { background: var(--accent); color: var(--ink); border: none; border-radius: 0.5rem; padding: 14px 42px; font-size: 1rem; font-weight: 500; cursor: pointer; font-family: inherit; box-shadow: 0 2px 8px -4px rgba(25, 28, 35, 0.10); transition: background 0.15s; }
   button[type="submit"]:hover { background: var(--accent-hover); }
   .submit-note { color: var(--muted); font-size: 0.86rem; margin-top: 14px; }
+  .submit-note a { color: var(--accent-ink); text-decoration: underline; text-underline-offset: 3px; }
 </style>
 </head>
 <body>
@@ -103,6 +107,7 @@
     <span class="eyebrow">Reddit programme &middot; onboarding</span>
     <h1>Agentik Questionnaire</h1>
     <p>Eleven short questions, all about Reddit. Where your users already hang out, what they actually do with Agentik, and what I can say when someone pushes back in a thread. Green blocks are what I took from your site and API, orange blocks are my own research. If a block is right, the answer is just "yes".</p>
+    <p>Want to know more about the programme before you answer? Read how it works at <a href="https://citationfun.notion.site/" target="_blank" rel="noopener">citationfun.notion.site</a>.</p>
     <div class="pills">
       <span class="pill">~10 minutes</span>
       <span class="pill">Every question optional</span>
@@ -284,7 +289,7 @@
 
 <div class="submit-block">
   <button type="submit">Submit questionnaire</button>
-  <p class="submit-note">Partial answers are fine. A form that is mostly "yes" is a useful form.</p>
+  <p class="submit-note">Partial answers are fine. A form that is mostly "yes" is a useful form. More on the programme at <a href="https://citationfun.notion.site/" target="_blank" rel="noopener">citationfun.notion.site</a>.</p>
 </div>
 
 </form>
