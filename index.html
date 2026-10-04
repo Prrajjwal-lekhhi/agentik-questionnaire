@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agentik Questionnaire</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f7f6f4;
+    --paper: #ffffff;
+    --surface-muted: #f3f3f3;
+    --ink: #14201e;
+    --muted: #5f6763;
+    --line: #dddfda;
+    --green: #15502e;
+    --green-soft: #dcebe1;
+    --accent: #ff6106;
+    --accent-hover: #e85700;
+    --accent-soft: #fee3da;
+    --accent-ink: #b94400;
+    --deep: #012b24;
+    --deep-line: #12433a;
+    --deep-text: #cfdad4;
+    --radius: 0.75rem;
+    --font-sans: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
+    --font-serif: "PP Eiko", Georgia, "Times New Roman", serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+  body { font-family: var(--font-sans); background: var(--cream); color: var(--ink); line-height: 1.6; }
+  ::selection { background: var(--accent-soft); color: var(--ink); }
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, label:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; }
+
+  .hero { background: var(--deep); border-bottom: 1px solid var(--deep-line); color: var(--paper); padding: 56px 20px 72px; }
+  .hero-inner { max-width: 760px; margin: 0 auto; }
+  .eyebrow { display: inline-block; font-size: 0.74rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
+  .hero h1 { font-family: var(--font-serif); font-size: clamp(2rem, 5vw, 2.8rem); font-weight: 400; letter-spacing: -0.02em; line-height: 1.14; margin-bottom: 14px; }
+  .hero p { font-size: 1.02rem; color: var(--deep-text); max-width: 600px; }
+  .hero .pills { margin-top: 24px; display: flex; flex-wrap: wrap; gap: 8px; }
+  .hero .pill { font-size: 0.8rem; color: var(--deep-text); border: 1px solid var(--deep-line); border-radius: 999px; padding: 5px 12px; }
+
+  .wrap { max-width: 760px; margin: -40px auto 0; padding: 0 20px 90px; }
+  section { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); padding: 30px 32px; margin-bottom: 18px; box-shadow: 0 2px 8px -4px rgba(25, 28, 35, 0.10); }
+  @media (max-width: 560px) { section { padding: 22px 18px; } }
+  .sec-head { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 6px; }
+  .sec-num { flex: 0 0 auto; width: 30px; height: 30px; display: grid; place-items: center; background: var(--green); color: var(--paper); font-weight: 600; font-size: 0.9rem; border-radius: 8px; margin-top: 5px; }
+  .sec-num.alt { background: var(--green-soft); color: var(--green); }
+  section h2 { font-family: var(--font-serif); font-size: 1.45rem; font-weight: 400; letter-spacing: -0.01em; line-height: 1.25; padding-top: 2px; }
+  .section-note { color: var(--muted); font-size: 0.92rem; margin: 6px 0 8px 44px; }
+  .sec-body { margin-top: 18px; }
+
+  .field { margin-bottom: 24px; }
+  .field:last-child { margin-bottom: 4px; }
+  label.q { display: block; font-weight: 600; font-size: 1rem; color: var(--ink); margin-bottom: 6px; }
+  .hint { color: var(--muted); font-size: 0.88rem; margin-bottom: 10px; }
+  .hint ul { margin: 6px 0 0 18px; }
+  .hint li { margin-bottom: 3px; }
+
+  textarea, input[type="text"], input[type="email"] { width: 100%; border: 1px solid var(--line); border-radius: 0.5rem; padding: 11px 13px; font-family: inherit; font-size: 0.94rem; color: var(--ink); background: var(--paper); transition: border-color 0.15s, box-shadow 0.15s; }
+  textarea { min-height: 92px; resize: vertical; }
+  textarea::placeholder, input::placeholder { color: #9aa29d; }
+  textarea:focus, input:focus { outline: none; border-color: var(--green); box-shadow: 0 0 0 3px rgba(21, 80, 46, 0.15); }
+  .row { display: flex; gap: 18px; flex-wrap: wrap; }
+  .row .field { flex: 1 1 210px; }
+
+  .known { background: var(--green-soft); border: 1px solid #c5dccd; border-radius: 0.5rem; padding: 13px 15px 14px; margin-bottom: 10px; font-size: 0.88rem; color: #1c3828; }
+  .known .tag { display: inline-block; font-size: 0.64rem; font-weight: 600; letter-spacing: 0.11em; text-transform: uppercase; color: var(--green); background: var(--paper); border: 1px solid #c5dccd; border-radius: 999px; padding: 3px 9px; margin-bottom: 9px; }
+  .known ul { margin: 6px 0 0 18px; }
+  .known li { margin-bottom: 3px; }
+  .known p + p { margin-top: 8px; }
+  .known table { width: 100%; border-collapse: collapse; margin-top: 6px; font-size: 0.85rem; }
+  .known td { padding: 5px 10px 5px 0; vertical-align: top; border-bottom: 1px solid #c5dccd; }
+  .known td:first-child { font-weight: 600; white-space: nowrap; width: 30%; }
+  .known tr:last-child td { border-bottom: none; }
+  .known.ours { background: var(--accent-soft); border-color: #f3c8b6; color: #5c2e15; }
+  .known.ours .tag { color: var(--accent-ink); border-color: #f3c8b6; }
+  .known.ours td { border-bottom-color: #f3c8b6; }
+  .confirm { font-size: 0.86rem; color: var(--accent-ink); font-weight: 500; margin-bottom: 10px; }
+  .confirm strong { font-weight: 600; }
+
+  .dropzone { display: block; border: 1px dashed #c8cdc7; border-radius: 0.5rem; background: var(--surface-muted); padding: 22px 18px; text-align: center; cursor: pointer; transition: border-color 0.15s, background 0.15s; }
+  .dropzone:hover, .dropzone.drag { border-color: var(--accent); background: var(--accent-soft); }
+  .dropzone strong { color: var(--ink); font-weight: 600; }
+  .dropzone .dz-sub { color: var(--muted); font-size: 0.84rem; margin-top: 4px; }
+  .dropzone input[type="file"] { display: none; }
+  .file-list { margin-top: 10px; display: flex; flex-direction: column; gap: 6px; }
+  .file-list .chip { display: flex; align-items: center; gap: 8px; background: var(--paper); border: 1px solid var(--line); border-radius: 0.5rem; padding: 7px 12px; font-size: 0.85rem; }
+  .file-list .chip .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); flex: 0 0 auto; }
+
+  .submit-block { text-align: center; padding-top: 6px; }
+  button[type="submit"] { background: var(--accent); color: var(--ink); border: none; border-radius: 0.5rem; padding: 14px 42px; font-size: 1rem; font-weight: 500; cursor: pointer; font-family: inherit; box-shadow: 0 2px 8px -4px rgba(25, 28, 35, 0.10); transition: background 0.15s; }
+  button[type="submit"]:hover { background: var(--accent-hover); }
+  .submit-note { color: var(--muted); font-size: 0.86rem; margin-top: 14px; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <span class="eyebrow">Reddit programme &middot; onboarding</span>
+    <h1>Agentik Questionnaire</h1>
+    <p>Eleven short questions, all about Reddit. Where your users already hang out, what they actually do with Agentik, and what I can say when someone pushes back in a thread. Green blocks are what I took from your site and API, orange blocks are my own research. If a block is right, the answer is just "yes".</p>
+    <div class="pills">
+      <span class="pill">~10 minutes</span>
+      <span class="pill">Every question optional</span>
+      <span class="pill">Short answers are fine</span>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+<form action="https://formbold.com/s/3Zpn5" method="POST" enctype="multipart/form-data">
+
+<section>
+  <div class="sec-head">
+    <div class="sec-num alt">&#9998;</div>
+    <h2>About you</h2>
+  </div>
+  <div class="sec-body">
+    <div class="row">
+      <div class="field">
+        <label class="q" for="name">Name</label>
+        <input type="text" id="name" name="name">
+      </div>
+      <div class="field">
+        <label class="q" for="email">Email</label>
+        <input type="email" id="email" name="email">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head">
+    <div class="sec-num">1</div>
+    <h2>Communities</h2>
+  </div>
+  <p class="section-note">The whole programme lives or dies on posting where your users already read.</p>
+  <div class="sec-body">
+
+  <div class="field">
+    <label class="q" for="own_subs">Which subreddits do you personally read or post in?</label>
+    <div class="hint">The ones you open most weeks, even if they have nothing to do with Agentik. Add your username if you post. This tells me which voices you already trust.</div>
+    <textarea id="own_subs" name="own_subs" placeholder="r/ClaudeAI, r/mcp, r/france, ..."></textarea>
+  </div>
+
+  <div class="field">
+    <label class="q" for="target_subs">My target list. Strike, add, rank.</label>
+    <div class="known ours">
+      <span class="tag">My research &middot; react to this</span>
+      <table>
+        <tr><td>Where the agent lives</td><td>r/ClaudeAI, r/ClaudeCode, r/cursor, r/ChatGPTPro, r/OpenAI</td></tr>
+        <tr><td>Tool builders</td><td>r/mcp, r/AI_Agents, r/LLMDevs, r/vibecoding</td></tr>
+        <tr><td>Indie makers</td><td>r/SideProject, r/indiehackers, r/SaaS</td></tr>
+        <tr><td>Use-case rooms</td><td>r/SEO, r/bigseo, r/webscraping, r/aivideo, r/StableDiffusion</td></tr>
+      </table>
+    </div>
+    <div class="confirm">Which of these have you actually seen your users in? Strike the ones that feel wrong, add any I missed, and mark your top four.</div>
+    <textarea id="target_subs" name="target_subs"></textarea>
+  </div>
+
+  <div class="field">
+    <label class="q" for="seen_threads">Threads where you have seen your users, or Monid and Treg, discussed</label>
+    <div class="hint">Paste links. Posts asking "how do I give Claude image generation", "best MCP servers", "is there one key for all these APIs", complaints about juggling subscriptions, anything where Agentik would have been the answer.</div>
+    <textarea id="seen_threads" name="seen_threads" placeholder="https://www.reddit.com/r/..."></textarea>
+  </div>
+
+  <div class="field">
+    <label class="q" for="avoid_subs">Communities to stay out of, and why</label>
+    <div class="hint">Places where the mods already know you, where you have been removed before, or where the audience would never pay for anything.</div>
+    <textarea id="avoid_subs" name="avoid_subs"></textarea>
+  </div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head">
+    <div class="sec-num">2</div>
+    <h2>What users actually do with it</h2>
+  </div>
+  <p class="section-note">Threads work when they retell a real workflow, so I need the real ones.</p>
+  <div class="sec-body">
+
+  <div class="field">
+    <label class="q" for="use_cases">The use cases, and the tool chain behind each</label>
+    <div class="known">
+      <span class="tag">From your site &middot; grasped correctly?</span>
+      <p>The homepage sells six jobs: launch a visual (fal images), bring a concept to life (fal video), build a brief with sources (Exa, Firecrawl, OpenAlex), back an idea with data (World Bank, Frankfurter), find a building block (GitHub, npm), and find an SEO win (DataForSEO). You told me users come with one specific use case that needs several tools.</p>
+    </div>
+    <div class="confirm">Which two or three do users actually show up with? For each, write the real chain, for example "Exa search, then Firecrawl, then GPT Image, then Kling", and which agent they sit in (Claude Desktop, Claude Code, ChatGPT, Cursor, Codex).</div>
+    <textarea id="use_cases" name="use_cases"></textarea>
+  </div>
+
+  <div class="field">
+    <label class="q" for="user_stories">Three user moments I can retell in public</label>
+    <div class="hint">Who they were, what they made, how much it took off the balance, how long it took. Numbers make a thread believable. First names or roles are enough.</div>
+    <textarea id="user_stories" name="user_stories"></textarea>
+  </div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head">
+    <div class="sec-num">3</div>
+    <h2>What I can and cannot say</h2>
+  </div>
+  <p class="section-note">Redditors fact-check. Anything I state has to survive a stranger clicking through.</p>
+  <div class="sec-body">
+
+  <div class="field">
+    <label class="q" for="claims">The claims I plan to use</label>
+    <div class="known">
+      <span class="tag">From your site and API &middot; grasped correctly?</span>
+      <table>
+        <tr><td>Catalogue</td><td>374 tools from 35 providers, discovery and inspection public without an account</td></tr>
+        <tr><td>Price</td><td>Provider's own price, no markup. 5.5% fee on top-ups, minimum USD 0.80, minimum top-up USD 5, fee waived on a first top-up of USD 10 or less</td></tr>
+        <tr><td>Safety</td><td>Prepaid balance is the hard ceiling, plus daily caps per key and per tool. Each run reserves the maximum first, bills measured usage, releases the rest, and returns a run ID receipt</td></tr>
+        <tr><td>Free tier</td><td>50 free runs a day unfunded, 1,000 funded</td></tr>
+        <tr><td>Company</td><td>BURIZA SASU, Paris. No crypto and no x402 by design</td></tr>
+      </table>
+    </div>
+    <div class="confirm">Write <strong>yes</strong>, or fix the row that is off. Then tell me which of these you would rather I never put in writing on Reddit.</div>
+    <textarea id="claims" name="claims"></textarea>
+  </div>
+
+  <div class="field">
+    <label class="q" for="vs_monid_treg">Monid and Treg, in your words</label>
+    <div class="hint">Both call themselves "OpenRouter for agent tools". Monid raised USD 2.1M and has 270 blog posts, Treg is open source with 3,800 endpoints and USD 1 free. When a redditor asks "how is this different from Monid or Treg", what do you say? And am I allowed to name them in comparison threads?</div>
+    <textarea id="vs_monid_treg" name="vs_monid_treg"></textarea>
+  </div>
+
+  <div class="field">
+    <label class="q" for="objections">Objections you have already heard, and your best answer to each</label>
+    <div class="hint">The ones I expect: why pay a middleman when fal and Exa ship free MCP servers, what do you log and keep, what happens to my money when a run fails halfway, you are two months old so what if you vanish with my balance, and 374 tools against their thousands.</div>
+    <textarea id="objections" name="objections"></textarea>
+  </div>
+
+  <div class="field">
+    <label class="q" for="hard_nos">Hard no's, the brand name, and the link</label>
+    <div class="hint">Words or claims I must never use (cheapest, free, partner of fal or OpenAI, anything legal). How to write the name on Reddit: Agentik, Agentik.cc or agentik.cc. And which URL a thread should send people to, or whether it should stay mention-only with no link.</div>
+    <textarea id="hard_nos" name="hard_nos"></textarea>
+  </div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head">
+    <div class="sec-num">4</div>
+    <h2>You on Reddit</h2>
+  </div>
+  <div class="sec-body">
+
+  <div class="field">
+    <label class="q" for="founder_presence">Founder posts and a promo for redditors</label>
+    <div class="hint">Do you or anyone on the team have a Reddit account with history (username, age, rough karma)? Would you post an "I built this" in r/SideProject or r/ClaudeAI, or do an AMA, under your real name? And can I offer redditors a promo balance as a hook, like the USD 5 I saw on my own account: what amount, what code, for how long.</div>
+    <textarea id="founder_presence" name="founder_presence"></textarea>
+  </div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head">
+    <div class="sec-num alt">&#8679;</div>
+    <h2>Anything else</h2>
+  </div>
+  <div class="sec-body">
+    <div class="field">
+      <label class="dropzone" for="attachments" id="dropzoneLabel">
+        <strong>Click to choose a file</strong> or drag it here
+        <div class="dz-sub">One file only. Screenshots of threads, a user list, a pitch deck, or a zip with everything inside.</div>
+        <input type="file" id="attachments" name="attachments">
+      </label>
+      <div class="file-list" id="fileList"></div>
+    </div>
+    <div class="field">
+      <label class="q" for="anything_else">Anything I got wrong or did not ask</label>
+      <textarea id="anything_else" name="anything_else"></textarea>
+    </div>
+  </div>
+</section>
+
+<div class="submit-block">
+  <button type="submit">Submit questionnaire</button>
+  <p class="submit-note">Partial answers are fine. A form that is mostly "yes" is a useful form.</p>
+</div>
+
+</form>
+</div>
+
+<script>
+  const input = document.getElementById('attachments');
+  const list = document.getElementById('fileList');
+  const zone = document.getElementById('dropzoneLabel');
+  function renderFiles(files) {
+    list.innerHTML = '';
+    Array.from(files).forEach(f => {
+      const chip = document.createElement('div');
+      chip.className = 'chip';
+      const kb = f.size > 1048576 ? (f.size / 1048576).toFixed(1) + ' MB' : Math.max(1, Math.round(f.size / 1024)) + ' KB';
+      chip.innerHTML = '<span class="dot"></span>' + f.name + ' <span style="color:#5f6763">(' + kb + ')</span>';
+      list.appendChild(chip);
+    });
+  }
+  input.addEventListener('change', () => renderFiles(input.files));
+  ['dragover', 'dragenter'].forEach(ev => zone.addEventListener(ev, e => { e.preventDefault(); zone.classList.add('drag'); }));
+  ['dragleave', 'drop'].forEach(ev => zone.addEventListener(ev, e => { e.preventDefault(); zone.classList.remove('drag'); }));
+  zone.addEventListener('drop', e => {
+    if (e.dataTransfer.files.length) {
+      const dt = new DataTransfer();
+      dt.items.add(e.dataTransfer.files[0]);
+      input.files = dt.files;
+      renderFiles(input.files);
+    }
+  });
+</script>
+</body>
+</html>
